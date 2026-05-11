@@ -30,8 +30,10 @@ function buildCard(p, index) {
     ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
     : `<div class="ph ph--light">${PH_SVG}<span>${p.nombre}</span></div>`;
 
+  const cats = (p.categorias || []).join(',');
+
   return `
-    <div class="product-card ${isTall ? 'product-card--tall' : ''} reveal ${delay}">
+    <div class="product-card ${isTall ? 'product-card--tall' : ''} reveal ${delay}" data-categorias="${cats}">
       <div class="product-card__img">
         ${p.badge ? `<span class="product-badge ${badgeClass}">${p.badge}</span>` : ''}
         ${imgHtml}
@@ -76,15 +78,20 @@ async function loadProducts() {
       return;
     }
 
-    // Columnas esperadas (en orden en el Sheet):
-    // A: Marca | B: Nombre | C: Precio Retail | D: Precio Alquiler | E: Badge | F: URL Imagen
+    // Columnas del Sheet DARIMAS:
+    // A: MARCA | B: NOMBRE | C-H: TIPO DE PRENDA 1-5 (categorías)
+    // I: PRECIO RETAIL | J: PRECIO ALQUILER | K: ESTADO | L: URL IMAGEN
     const products = rows.map(row => ({
-      marca:    row.c[0]?.v ?? '',
-      nombre:   row.c[1]?.v ?? '',
-      retail:   row.c[2]?.v ?? '',
-      alquiler: row.c[3]?.v ?? '',
-      badge:    row.c[4]?.v ?? 'Nuevo',
-      imagen:   row.c[5]?.v ?? '',
+      marca:      row.c[0]?.v ?? '',
+      nombre:     row.c[1]?.v ?? '',
+      categorias: [
+        row.c[2]?.v, row.c[3]?.v, row.c[4]?.v,
+        row.c[5]?.v, row.c[6]?.v, row.c[7]?.v,
+      ].filter(Boolean),
+      retail:     row.c[8]?.v ?? '',
+      alquiler:   row.c[9]?.v ?? '',
+      badge:      row.c[10]?.v ?? 'Nuevo',
+      imagen:     row.c[11]?.v ?? '',
     })).filter(p => p.marca && p.nombre);
 
     grid.innerHTML = products.map(buildCard).join('');
