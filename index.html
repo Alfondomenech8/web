@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alquiler y venta de moda de diseñador. Piezas únicas para cada ocasión.">
+  <title>TU MARCA | Moda de Diseñador — Alquiler &amp; Compra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HEADER
+══════════════════════════════ -->
+<header class="header header--light" id="header">
+
+  <!-- Logo izquierda -->
+  <a href="/" class="header__logo">Tu&nbsp;Marca</a>
+
+  <!-- Nav centrada -->
+  <nav class="header__nav" aria-label="Navegación principal">
+    <a href="#">Alquilar</a>
+    <a href="#">Comprar</a>
+    <a href="#proceso">Cómo funciona</a>
+    <a href="#">Nosotros</a>
+  </nav>
+
+  <!-- Acciones derecha -->
+  <div class="header__actions">
+    <button class="header__icon" id="search-open" aria-label="Buscar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="header__icon" id="cart-open" aria-label="Cesta">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cart-count">0</span>
+    </button>
+    <a href="#" class="header__icon" aria-label="Acceder">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </a>
+  </div>
+
+  <!-- Hamburger móvil -->
+  <button class="header__hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+
+</header>
+
+<!-- ══════════════════════════════
+     MENÚ MÓVIL
+══════════════════════════════ -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav>
+    <a href="#" onclick="closeMobileMenu()">Alquilar</a>
+    <a href="#" onclick="closeMobileMenu()">Comprar</a>
+    <a href="#proceso" onclick="closeMobileMenu()">Cómo funciona</a>
+    <a href="#" onclick="closeMobileMenu()">Nosotros</a>
+  </nav>
+  <div class="mobile-menu__footer">
+    <a href="#">Acceder</a>
+    <a href="#">Contacto</a>
+    <a href="#">Instagram</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     HERO — editorial full-screen
+══════════════════════════════ -->
+<section class="hero">
+
+  <!-- Fondo: reemplaza .ph por <img class="..." src="images/hero.jpg" alt=""> -->
+  <div class="hero__bg">
+    <div class="ph">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="0.7"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Foto hero principal</span>
+    </div>
+  </div>
+
+  <!-- Palabra gigante decorativa -->
+  <div class="hero__wordmark" aria-hidden="true">MODA</div>
+
+  <!-- Foto editorial flotante derecha — reemplaza .ph por <img> -->
+  <div class="hero__photo">
+    <div class="ph">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Foto editorial</span>
+    </div>
+  </div>
+
+  <!-- Contenido inferior -->
+  <div class="hero__content">
+    <div>
+      <h1 class="hero__headline">
+        El armario<br>que siempre<br><em>quisiste</em>
+      </h1>
+    </div>
+    <div class="hero__meta">
+      <p>Alquiler desde 4 días<br>Envío incluido · Toda Europa</p>
+      <div class="hero__ctas">
+        <a href="#" class="btn btn--solid">Alquilar</a>
+        <a href="#" class="btn btn--ghost">Comprar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero__scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════
+     TICKER DE MARCAS
+══════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <!-- Primera copia -->
+    <span class="ticker__item">Marca&nbsp;1</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;2</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;3</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;4</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;5</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;6</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;7</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <!-- Segunda copia para el loop -->
+    <span class="ticker__item">Marca&nbsp;1</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;2</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;3</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;4</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;5</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Diseñador&nbsp;6</span>
+    <span class="ticker__item ticker__sep">✦</span>
+    <span class="ticker__item">Marca&nbsp;7</span>
+    <span class="ticker__item ticker__sep">✦</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     GRID DE PRODUCTOS
+══════════════════════════════ -->
+<section class="section section--paper">
+  <div class="products-header reveal">
+    <div>
+      <p class="section__label">Recién llegados</p>
+      <h2 class="section__title">Lo nuevo<br><em>esta semana</em></h2>
+    </div>
+    <a href="#" class="btn btn--outline-dark">Ver todo
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- ═ Producto — copia este bloque para añadir más.
+         Cambia .ph por <img src="images/prod.jpg" alt="nombre">
+         Cambia badge--new por badge--preloved si procede ═ -->
+
+    <div class="product-card reveal">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card product-card--tall reveal reveal-delay-1">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--preloved">Pre-loved</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card product-card--tall reveal">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--preloved">Pre-loved</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-card__img">
+        <span class="product-badge product-badge--new">Nuevo</span>
+        <div class="ph ph--light">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Producto</span>
+        </div>
+        <div class="product-card__overlay">
+          <p class="product-card__overlay-price">Alquiler €00 · Comprar €000</p>
+          <p class="product-card__overlay-cta">Ver pieza <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></p>
+        </div>
+      </div>
+      <div class="product-card__info">
+        <p class="product-brand">Marca</p>
+        <p class="product-name">Nombre del producto</p>
+        <p class="product-price"><strong>Alquiler €00,00</strong> / 4 días</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     EDITORIAL — OCASIONES
+══════════════════════════════ -->
+<section class="editorial reveal">
+  <!-- Reemplaza .ph por <img src="images/bodas.jpg" alt=""> -->
+  <div class="editorial__img">
+    <div class="ph">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Foto ocasión especial</span>
+    </div>
+  </div>
+  <div class="editorial__body">
+    <span class="editorial__num" aria-hidden="true">01</span>
+    <p class="editorial__label">Temporada 2026</p>
+    <h2 class="editorial__title">Para cada<br><em>ocasión especial</em></h2>
+    <p class="editorial__body-text">
+      Bodas, galas, eventos. Nuestra selección de diseñadores independientes y de lujo está pensada para los momentos que merecen algo único. Alquila desde 4 días, envío a toda Europa.
+    </p>
+    <a href="#" class="btn btn--solid">Explorar vestidos
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PROCESO — ACORDEÓN
+══════════════════════════════ -->
+<section class="section process" id="proceso">
+  <div class="process__grid">
+
+    <div class="process__intro reveal">
+      <p class="section__label" style="color: var(--clay);">Simple y flexible</p>
+      <h2 class="process__intro-title">Cómo<br><em>funciona</em></h2>
+      <p>Sin complicaciones. Elige, recibe, disfruta y devuelve. Nosotros nos encargamos del resto.</p>
+      <a href="#" class="btn btn--ghost">Saber más</a>
+    </div>
+
+    <div class="accordion reveal" id="accordion">
+
+      <div class="accordion__item open">
+        <div class="accordion__head" role="button" tabindex="0" aria-expanded="true">
+          <span class="accordion__num">01</span>
+          <span class="accordion__title">Elige tu pieza</span>
+          <span class="accordion__arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </div>
+        <div class="accordion__body">
+          <p>Explora nuestra colección de diseñadores independientes y de lujo. Filtra por ocasión, talla, color o estilo. Cada pieza es única.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <div class="accordion__head" role="button" tabindex="0" aria-expanded="false">
+          <span class="accordion__num">02</span>
+          <span class="accordion__title">Selecciona fechas</span>
+          <span class="accordion__arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </div>
+        <div class="accordion__body">
+          <p>Elige los días que la necesitas. Mínimo 4 días. El envío de ida y vuelta está siempre incluido en el precio.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <div class="accordion__head" role="button" tabindex="0" aria-expanded="false">
+          <span class="accordion__num">03</span>
+          <span class="accordion__title">Recibe en casa</span>
+          <span class="accordion__arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </div>
+        <div class="accordion__body">
+          <p>Tu pedido llega en packaging cuidado y limpio. Disfruta de la pieza sin preocuparte por nada más.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <div class="accordion__head" role="button" tabindex="0" aria-expanded="false">
+          <span class="accordion__num">04</span>
+          <span class="accordion__title">Devuelve sin estrés</span>
+          <span class="accordion__arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </div>
+        <div class="accordion__body">
+          <p>Usa el embalaje incluido para la devolución. Nosotros nos encargamos de la limpieza y el cuidado de cada pieza.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     EDITORIAL — COMPRAR
+══════════════════════════════ -->
+<section class="editorial editorial--flip reveal">
+  <div class="editorial__img">
+    <div class="ph">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Foto colección compra</span>
+    </div>
+  </div>
+  <div class="editorial__body">
+    <span class="editorial__num" aria-hidden="true">02</span>
+    <p class="editorial__label">Pre-loved &amp; nuevo</p>
+    <h2 class="editorial__title">Compra piezas<br><em>únicas</em></h2>
+    <p class="editorial__body-text">
+      Un armario más consciente. Compra piezas de diseñador —nuevas o pre-loved— con la misma autenticidad, a un precio diferente.
+    </p>
+    <a href="#" class="btn btn--solid">Ver colección
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     FOOTER — claro, con cita
+══════════════════════════════ -->
+<footer class="footer">
+
+  <p class="footer__quote reveal">
+    "La moda no debería ser un privilegio.<br>
+    <strong>Alquila o compra</strong> —tú decides."
+  </p>
+
+  <div class="footer__grid">
+
+    <div>
+      <p class="footer__brand-logo">Tu&nbsp;Marca</p>
+      <p class="footer__tagline">Moda de diseñador accesible. Alquila o compra piezas únicas, con envío a toda Europa.</p>
+      <div class="footer__social">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.6 3.3a4.5 4.5 0 01-2.8-2.3h-3v13c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5 1.1-2.5 2.5-2.5c.3 0 .5 0 .7.1V8.4a6.2 6.2 0 00-.7 0 6 6 0 00-6 6 6 6 0 006 6 6 6 0 006-6V8.1a7.4 7.4 0 004.3 1.4V6.2a4.5 4.5 0 01-2-.9z"/></svg>
+        </a>
+        <a href="#" aria-label="Pinterest">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 5.1 3.2 9.4 7.6 11.2-.1-.9-.2-2.4 0-3.4.2-.9 1.4-6 1.4-6s-.4-.7-.4-1.8c0-1.7 1-2.9 2.2-2.9 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 3.9-.3 1.2.6 2.2 1.8 2.2 2.1 0 3.8-2.2 3.8-5.5 0-2.9-2.1-4.9-5-4.9-3.4 0-5.4 2.6-5.4 5.2 0 1 .4 2.1.9 2.7.1.1.1.2.1.3l-.3 1.4c-.1.2-.2.3-.4.2-1.5-.7-2.4-2.9-2.4-4.6 0-3.8 2.8-7.3 7.9-7.3 4.2 0 7.4 3 7.4 6.9 0 4.1-2.6 7.5-6.2 7.5-1.2 0-2.4-.6-2.8-1.4l-.7 2.9c-.3 1-.9 2.3-1.5 3.1C9.6 23.8 10.8 24 12 24c6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <p class="footer__col-title">Empresa</p>
+      <div class="footer__links">
+        <a href="#">Sobre nosotros</a>
+        <a href="#">Cómo funciona</a>
+
+        <a href="#">Colabora</a>
+        <a href="#">Contacto</a>
+      </div>
+    </div>
+
+    <div>
+      <p class="footer__col-title">Ayuda</p>
+      <div class="footer__links">
+        <a href="#">Guía de tallas</a>
+        <a href="#">FAQ</a>
+        <a href="#">Envíos y devoluciones</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+
+    <div class="footer__newsletter">
+      <p class="footer__col-title">Newsletter</p>
+      <p>Lanzamientos, eventos y ofertas exclusivas.</p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="tu@correo.com" required aria-label="Email">
+        <button class="newsletter-submit" type="submit" id="subscribe-btn">Suscribirme</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="footer__bottom">
+    <p class="footer__copy">© 2026 Tu Marca · Todos los derechos reservados</p>
+    <div class="footer__selectors">
+      <div class="footer__sel">
+        <label for="f-country">País</label>
+        <select id="f-country">
+          <option>España (EUR €)</option>
+          <option>Francia (EUR €)</option>
+          <option>Italia (EUR €)</option>
+          <option>Portugal (EUR €)</option>
+          <option>Reino Unido (GBP £)</option>
+          <option>Alemania (EUR €)</option>
+        </select>
+      </div>
+      <div class="footer__sel">
+        <label for="f-lang">Idioma</label>
+        <select id="f-lang">
+          <option>Español</option>
+          <option>English</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<!-- WHATSAPP -->
+<a class="wa-btn" href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12 12 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- BÚSQUEDA -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true">
+  <div class="search-wrap">
+    <div class="search-row">
+      <input class="search-field" id="search-input" type="text" placeholder="¿Qué buscas?" autocomplete="off">
+      <button class="search-x" id="search-close" aria-label="Cerrar">✕</button>
+    </div>
+    <p class="search-hint">Busca por marca, prenda, color o estilo…</p>
+  </div>
+</div>
+
+<!-- CARRITO -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true">
+  <div class="cart-head">
+    <h2>Tu cesta</h2>
+    <button id="cart-close" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="cart-empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.2">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    <p>Tu cesta está vacía.<br>Explora la colección.</p>
+  </div>
+  <div class="cart-foot">
+    <button class="btn btn--solid" style="width:100%;justify-content:center;opacity:.4;" disabled>Finalizar pedido</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
