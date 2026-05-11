@@ -61,7 +61,7 @@ async function loadProducts() {
 
   // Intenta caché localStorage primero
   try {
-    const raw = localStorage.getItem('darimas_products_v1');
+    const raw = localStorage.getItem('darimas_products_v2');
     if (raw) {
       const { ts, data } = JSON.parse(raw);
       if (Date.now() - ts < 5 * 60 * 1000 && data.length > 0) {
@@ -69,7 +69,7 @@ async function loadProducts() {
         grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
         // Refresca en background
         fetch('/api/productos').then(r => r.json()).then(({ products }) => {
-          if (products?.length) localStorage.setItem('darimas_products_v1', JSON.stringify({ ts: Date.now(), data: products }));
+          if (products?.length) localStorage.setItem('darimas_products_v2', JSON.stringify({ ts: Date.now(), data: products }));
         }).catch(() => {});
         return;
       }
@@ -84,7 +84,7 @@ async function loadProducts() {
     const { ok, products } = await res.json();
     if (!ok || !products || products.length === 0) return;
 
-    try { localStorage.setItem('darimas_products_v1', JSON.stringify({ ts: Date.now(), data: products })); } catch (_) {}
+    try { localStorage.setItem('darimas_products_v2', JSON.stringify({ ts: Date.now(), data: products })); } catch (_) {}
 
     grid.innerHTML = products.map(buildCard).join('');
     grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));

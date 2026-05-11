@@ -9,7 +9,7 @@ const PH_SVG = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stro
   <path d="M21 15l-5-5L5 21"/>
 </svg>`;
 
-const CACHE_KEY = 'darimas_products_v1';
+const CACHE_KEY = 'darimas_products_v2';
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
 
 let allProducts  = [];
