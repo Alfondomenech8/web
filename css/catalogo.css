@@ -1,0 +1,129 @@
+/* ═══════════════════════════════════════════════════════
+   DARIMAS — Catálogo con filtros
+═══════════════════════════════════════════════════════ */
+
+/* ── Cabecera ── */
+.cat-header {
+  padding: 100px clamp(24px, 6vw, 96px) 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--smoke);
+}
+.cat-header__title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--ink);
+  margin-top: 12px;
+}
+.cat-header__title em { font-style: italic; color: var(--clay); }
+.cat-header__count {
+  font-size: 13px;
+  color: var(--fog);
+  font-style: italic;
+  white-space: nowrap;
+  padding-bottom: 8px;
+}
+
+/* ── Filtros ── */
+.cat-filters {
+  position: sticky;
+  top: 64px;
+  z-index: 50;
+  background: rgba(253, 250, 244, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--smoke);
+  padding: 0 clamp(24px, 6vw, 96px);
+}
+.cat-filters__scroll {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 14px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cat-filters__scroll::-webkit-scrollbar { display: none; }
+
+.cat-filter {
+  flex-shrink: 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fog);
+  background: transparent;
+  border: 1px solid var(--smoke);
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.cat-filter:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.cat-filter.active {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+/* ── Grid ── */
+.cat-grid-wrap {
+  padding: 40px clamp(24px, 6vw, 96px) 80px;
+}
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 320px;
+  gap: 10px;
+}
+
+/* ── Cards en catálogo (más altas) ── */
+.cat-grid .product-card { display: block; }
+.cat-grid .product-card__img { height: calc(100% - 90px); }
+.cat-grid .product-card--tall { grid-row: span 2; }
+.cat-grid .product-card--tall .product-card__img { height: calc(100% - 90px); }
+
+/* ── Animación filtro ── */
+.product-card {
+  transition: opacity 0.3s ease, transform 0.3s ease,
+              box-shadow 0.4s var(--ease-out);
+}
+.product-card.hidden {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+/* ── Empty state ── */
+.cat-empty {
+  text-align: center;
+  padding: 80px 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--fog);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .cat-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 260px; }
+  .cat-grid .product-card--tall { grid-row: span 1; }
+  .cat-header { padding-top: 90px; }
+}
+@media (max-width: 480px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+}
