@@ -33,7 +33,7 @@ function buildCard(p, index) {
   const cats = (p.categorias || []).join(',');
 
   return `
-    <div class="product-card ${isTall ? 'product-card--tall' : ''} reveal ${delay}" data-categorias="${cats}">
+    <a href="producto.html?id=${index}" class="product-card ${isTall ? 'product-card--tall' : ''} reveal ${delay}" data-categorias="${cats}">
       <div class="product-card__img">
         ${p.badge ? `<span class="product-badge ${badgeClass}">${p.badge}</span>` : ''}
         ${imgHtml}
@@ -51,7 +51,7 @@ function buildCard(p, index) {
           <span class="price-rent">Alquiler <strong>€${p.alquiler}</strong></span>
         </div>
       </div>
-    </div>`;
+    </a>`;
 }
 
 // ── Carga productos desde Google Sheets ──

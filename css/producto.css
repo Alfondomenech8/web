@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════════════════
+   DARIMAS — Página de detalle de producto
+═══════════════════════════════════════════════════════ */
+
+.body--producto {
+  background: var(--white);
+}
+
+/* ── Breadcrumb ── */
+.pd-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 90px clamp(24px, 6vw, 96px) 0;
+  font-size: 12px;
+  color: var(--fog);
+  letter-spacing: 0.05em;
+}
+.pd-breadcrumb a {
+  color: var(--fog);
+  transition: color 0.2s;
+}
+.pd-breadcrumb a:hover { color: var(--ink); }
+.pd-breadcrumb span { color: var(--sand); }
+.pd-breadcrumb span:last-child { color: var(--ink); }
+
+/* ── Layout principal ── */
+.pd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 64px);
+  padding: 0 clamp(24px, 6vw, 96px);
+  gap: clamp(40px, 6vw, 80px);
+  padding-top: 32px;
+  padding-bottom: 80px;
+  align-items: start;
+}
+
+/* ── Columna imagen ── */
+.pd__gallery {
+  position: sticky;
+  top: 88px;
+}
+.pd__img-main {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--smoke);
+  overflow: hidden;
+  position: relative;
+}
+.pd__img-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.pd__img-main:hover img { transform: scale(1.03); }
+.pd__img-main .ph {
+  height: 100%;
+  background: var(--smoke);
+}
+.pd-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* ── Columna info ── */
+.pd__info {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pd__top { margin-bottom: 20px; }
+.pd__brand {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-bottom: 10px;
+}
+.pd__name {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* ── Precios ── */
+.pd__pricing { margin-bottom: 20px; }
+.pd__price-retail {
+  font-size: 13px;
+  color: var(--fog);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.pd__price-retail s { text-decoration: line-through; }
+.pd__price-rent {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.pd__price-rent strong { color: var(--clay); font-weight: 400; }
+.pd__price-note {
+  font-size: 12px;
+  color: var(--fog);
+  font-family: var(--sans);
+  font-weight: 300;
+  margin-left: 4px;
+}
+.pd__saving {
+  display: inline-block;
+  background: rgba(200, 75, 47, 0.1);
+  color: var(--clay);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Categorías ── */
+.pd__cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.pd__cat-tag {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fog);
+  border: 1px solid var(--smoke);
+  padding: 5px 12px;
+  border-radius: 20px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.pd__cat-tag:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ── Divisor ── */
+.pd__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--smoke);
+  margin: 24px 0;
+}
+
+/* ── Selector de fechas ── */
+.pd__dates { }
+.pd__dates-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.pd__dates-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.pd__date-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pd__date-field label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+.pd__date-field input[type="date"] {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--smoke);
+  color: var(--ink);
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+.pd__date-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--clay);
+}
+.pd__date-sep {
+  color: var(--fog);
+  font-size: 16px;
+  padding-top: 20px;
+  flex-shrink: 0;
+}
+.pd__dates-note {
+  font-size: 12px;
+  color: var(--fog);
+  font-style: italic;
+}
+.pd__dates-note.ok { color: var(--clay); font-style: normal; }
+
+/* ── CTAs ── */
+.pd__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pd__btn-reserve {
+  justify-content: center;
+  padding: 16px;
+  font-size: 13px;
+}
+.pd__btn-cart {
+  justify-content: center;
+  padding: 16px;
+  font-size: 13px;
+}
+
+/* ── Cómo funciona ── */
+.pd__how-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.pd__how-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pd__how-list li {
+  font-size: 14px;
+  color: var(--fog);
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pd__check {
+  color: var(--clay);
+  font-size: 12px;
+}
+
+/* ── Volver ── */
+.pd__back {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--fog);
+  transition: color 0.2s;
+  margin-top: 8px;
+  display: inline-block;
+}
+.pd__back:hover { color: var(--ink); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .pd {
+    grid-template-columns: 1fr;
+    padding-top: 24px;
+  }
+  .pd__gallery { position: static; }
+  .pd__img-main { aspect-ratio: 4/5; }
+}
+
+@media (max-width: 480px) {
+  .pd__dates-row { flex-direction: column; align-items: stretch; }
+  .pd__date-sep { display: none; }
+}

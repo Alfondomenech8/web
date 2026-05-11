@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARIMAS | Detalle de pieza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/producto.css">
+</head>
+<body class="body--producto">
+
+<!-- ── HEADER ── -->
+<header class="header header--dark" id="header">
+  <a href="/" class="header__logo">DARIMAS</a>
+  <nav class="header__nav">
+    <a href="/#alquilar">Alquilar</a>
+    <a href="/#comprar">Comprar</a>
+    <a href="/#como-funciona">Cómo funciona</a>
+    <a href="/#nosotros">Nosotros</a>
+  </nav>
+  <div class="header__actions">
+    <button class="header__icon" id="search-open" aria-label="Buscar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="header__icon" id="cart-open" aria-label="Cesta">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cart-count">0</span>
+    </button>
+    <a href="#" class="header__icon" aria-label="Acceder">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </a>
+  </div>
+  <button class="header__hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ── MENÚ MÓVIL ── -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav>
+    <a href="/#alquilar" onclick="closeMobileMenu()">Alquilar</a>
+    <a href="/#comprar" onclick="closeMobileMenu()">Comprar</a>
+    <a href="/#como-funciona" onclick="closeMobileMenu()">Cómo funciona</a>
+    <a href="/#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+  </nav>
+  <div class="mobile-menu__footer">
+    <a href="#">Acceder</a>
+    <a href="#">Contacto</a>
+  </div>
+</div>
+
+<!-- ── BREADCRUMB ── -->
+<div class="pd-breadcrumb">
+  <a href="/">Inicio</a>
+  <span>→</span>
+  <a href="/#alquilar">Colección</a>
+  <span>→</span>
+  <span id="pd-breadcrumb-name">Cargando…</span>
+</div>
+
+<!-- ── DETALLE ── -->
+<main class="pd" id="pd-main">
+
+  <!-- Columna imagen -->
+  <div class="pd__gallery">
+    <div class="pd__img-main" id="pd-img-main">
+      <div class="pd-loading">
+        <div class="products-loading__spinner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna info -->
+  <div class="pd__info">
+
+    <div class="pd__top">
+      <p class="pd__brand" id="pd-brand">—</p>
+      <h1 class="pd__name" id="pd-name">Cargando…</h1>
+    </div>
+
+    <div class="pd__pricing" id="pd-pricing">
+      <div class="pd__price-retail">
+        Precio retail <s id="pd-retail">—</s>
+      </div>
+      <div class="pd__price-rent">
+        Alquiler desde <strong id="pd-alquiler">—</strong>
+        <span class="pd__price-note">/ 4 días · envío incluido</span>
+      </div>
+      <div class="pd__saving" id="pd-saving"></div>
+    </div>
+
+    <div class="pd__cats" id="pd-cats"></div>
+
+    <div class="pd__divider"></div>
+
+    <!-- Selector de fechas -->
+    <div class="pd__dates">
+      <p class="pd__dates-label">¿Cuándo es tu evento?</p>
+      <div class="pd__dates-row">
+        <div class="pd__date-field">
+          <label for="pd-date-start">Recogida</label>
+          <input type="date" id="pd-date-start">
+        </div>
+        <div class="pd__date-sep">→</div>
+        <div class="pd__date-field">
+          <label for="pd-date-end">Devolución</label>
+          <input type="date" id="pd-date-end">
+        </div>
+      </div>
+      <p class="pd__dates-note" id="pd-dates-note">Selecciona las fechas para ver disponibilidad</p>
+    </div>
+
+    <div class="pd__divider"></div>
+
+    <!-- CTAs -->
+    <div class="pd__ctas">
+      <a href="#" class="btn btn--solid pd__btn-reserve" id="pd-btn-whatsapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12 12 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Reservar por WhatsApp
+      </a>
+      <button class="btn btn--ghost pd__btn-cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Añadir a la cesta
+      </button>
+    </div>
+
+    <div class="pd__divider"></div>
+
+    <!-- Cómo funciona -->
+    <div class="pd__how">
+      <p class="pd__how-title">Incluido en el alquiler</p>
+      <ul class="pd__how-list">
+        <li><span class="pd__check">✓</span> Envío de ida y vuelta</li>
+        <li><span class="pd__check">✓</span> Limpieza profesional</li>
+        <li><span class="pd__check">✓</span> Seguro de la prenda</li>
+        <li><span class="pd__check">✓</span> Mínimo 4 días</li>
+      </ul>
+    </div>
+
+    <div class="pd__divider"></div>
+
+    <a href="/#alquilar" class="pd__back">← Volver a la colección</a>
+
+  </div>
+</main>
+
+<!-- ── BÚSQUEDA ── -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true">
+  <div class="search-wrap">
+    <div class="search-row">
+      <input class="search-field" id="search-input" type="text" placeholder="Busca: vestido rojo boda · look old money…" autocomplete="off">
+      <button class="search-x" id="search-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="search-suggestions">
+      <p class="search-hint">Búsquedas populares</p>
+      <div class="search-tags">
+        <a href="#" class="search-tag">vestido boda</a>
+        <a href="#" class="search-tag">look gala</a>
+        <a href="#" class="search-tag">Jacquemus</a>
+        <a href="#" class="search-tag">look old money</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CARRITO ── -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true">
+  <div class="cart-head">
+    <h2>Tu cesta</h2>
+    <button id="cart-close" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="cart-empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.2">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    <p>Tu cesta está vacía.</p>
+  </div>
+  <div class="cart-foot">
+    <button class="btn btn--solid" style="width:100%;justify-content:center;opacity:.4;" disabled>Finalizar pedido</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/producto.js"></script>
+</body>
+</html>

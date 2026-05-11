@@ -569,6 +569,9 @@ input, select { font: inherit; }
 .product-card {
   background: var(--white);
   cursor: pointer;
+  display: block;
+  color: inherit;
+  text-decoration: none;
   transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(28,18,8,0.1); }
