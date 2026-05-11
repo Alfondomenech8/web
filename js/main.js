@@ -1,6 +1,6 @@
-// ── Header: light sobre hero oscuro → dark al salir del hero ──
-const header = document.getElementById('header');
-const hero   = document.querySelector('.hero');
+// ── Header: light sobre hero oscuro → dark al salir ──
+const header   = document.getElementById('header');
+const heroEl   = document.getElementById('hero');
 
 const headerObserver = new IntersectionObserver(
   ([entry]) => {
@@ -9,7 +9,18 @@ const headerObserver = new IntersectionObserver(
   },
   { threshold: 0.1 }
 );
-if (hero) headerObserver.observe(hero);
+if (heroEl) headerObserver.observe(heroEl);
+
+// ── Parallax hero background ──
+const heroBg = document.getElementById('hero-bg');
+if (heroBg) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight * 1.2) {
+      heroBg.style.transform = `translateY(${y * 0.28}px)`;
+    }
+  }, { passive: true });
+}
 
 // ── Scroll reveal ──
 const revealObserver = new IntersectionObserver(
@@ -21,32 +32,9 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.12 }
+  { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
 );
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── Acordeón ──
-document.querySelectorAll('.accordion__head').forEach(head => {
-  head.addEventListener('click', () => toggleAccordion(head));
-  head.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAccordion(head); }
-  });
-});
-
-function toggleAccordion(head) {
-  const item    = head.closest('.accordion__item');
-  const isOpen  = item.classList.contains('open');
-
-  document.querySelectorAll('.accordion__item').forEach(i => {
-    i.classList.remove('open');
-    i.querySelector('.accordion__head').setAttribute('aria-expanded', 'false');
-  });
-
-  if (!isOpen) {
-    item.classList.add('open');
-    head.setAttribute('aria-expanded', 'true');
-  }
-}
 
 // ── Menú móvil ──
 const hamburger  = document.getElementById('hamburger');
@@ -77,7 +65,7 @@ searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) c
 
 function openSearch() {
   searchOverlay.classList.add('open');
-  setTimeout(() => searchInput.focus(), 60);
+  setTimeout(() => searchInput.focus(), 80);
   document.body.style.overflow = 'hidden';
 }
 function closeSearch() {
@@ -113,21 +101,27 @@ document.addEventListener('keydown', e => {
   closeMobileMenu();
 });
 
-// ── Newsletter ──
+// ── Newsletter / Membership form ──
 const newsletterForm = document.getElementById('newsletter-form');
 if (newsletterForm) {
   newsletterForm.addEventListener('submit', e => {
     e.preventDefault();
     const btn   = document.getElementById('subscribe-btn');
     const input = newsletterForm.querySelector('input');
-    btn.textContent = '¡Suscrito! ✓';
+    const orig  = btn.textContent;
+    btn.textContent = '¡Bienvenida al Select! ✓';
     btn.style.background = 'var(--ink)';
-    btn.style.color = 'var(--paper)';
     input.value = '';
     setTimeout(() => {
-      btn.textContent = 'Suscribirme';
+      btn.textContent = orig;
       btn.style.background = '';
-      btn.style.color = '';
     }, 4000);
   });
+}
+
+// ── Ticker pausa en hover (ya en CSS, refuerzo para móvil) ──
+const ticker = document.querySelector('.ticker__track');
+if (ticker) {
+  ticker.addEventListener('touchstart', () => ticker.style.animationPlayState = 'paused', { passive: true });
+  ticker.addEventListener('touchend',   () => ticker.style.animationPlayState = 'running', { passive: true });
 }
