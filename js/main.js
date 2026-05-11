@@ -7,7 +7,7 @@
 // 2. Archivo → Compartir → Publicar en la web → CSV → Publicar
 // 3. Copia el ID del Sheet de la URL (la parte larga entre /d/ y /edit)
 // 4. Pégalo aquí:
-const SHEET_ID = 'TU_SHEET_ID_AQUI';
+const SHEET_ID = '1ej89gQ-r0WfrsrJtjUJI8SyA02tfms5mZcpp1O5m4bY';
 // ────────────────────────────────────────────────────────
 
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
