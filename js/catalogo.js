@@ -104,9 +104,16 @@ async function loadCatalog() {
     return;
   }
 
+  // Muestra demos mientras carga para que nunca se vea vacío
+  allProducts = DEMO_PRODUCTS;
+  renderAll();
+
   try {
-    const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-    const res  = await fetch(url);
+    const url        = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+    const controller = new AbortController();
+    const timer      = setTimeout(() => controller.abort(), 6000);
+    const res        = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
     const text = await res.text();
     const json = JSON.parse(text.substring(47).slice(0, -2));
     const rows = json.table.rows;
