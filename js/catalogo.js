@@ -9,12 +9,15 @@ const PH_SVG = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stro
   <path d="M21 15l-5-5L5 21"/>
 </svg>`;
 
+const CACHE_KEY = 'darimas_products_v1';
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+
 let allProducts  = [];
 let activeFilter = 'todas';
 
 // ── Construye una card ──
 function buildCard(p, index) {
-  const isTall    = index % 5 === 1 || index % 5 === 4;
+  const isTall     = index % 5 === 1 || index % 5 === 4;
   const badgeClass = (p.badge || '').toLowerCase() === 'nuevo'
     ? 'product-badge--new'
     : 'product-badge--preloved';
@@ -49,17 +52,20 @@ function buildCard(p, index) {
     </a>`;
 }
 
-// ── Genera los botones de filtro desde las categorías del Sheet ──
+// ── Genera los botones de filtro ──
 function buildFilters(products) {
   const cats = new Set();
   products.forEach(p => (p.categorias || []).forEach(c => { if (c) cats.add(c); }));
 
+  // Limpia filtros anteriores (excepto "Todas")
   const filtersEl = document.querySelector('.cat-filters__scroll');
+  filtersEl.querySelectorAll('.cat-filter:not([data-filter="todas"])').forEach(b => b.remove());
+
   cats.forEach(cat => {
     const btn = document.createElement('button');
-    btn.className    = 'cat-filter';
+    btn.className      = 'cat-filter';
     btn.dataset.filter = cat;
-    btn.textContent  = cat;
+    btn.textContent    = cat;
     filtersEl.appendChild(btn);
     btn.addEventListener('click', () => applyFilter(cat));
   });
@@ -69,14 +75,12 @@ function buildFilters(products) {
 function applyFilter(filter) {
   activeFilter = filter;
 
-  // Actualiza botones
   document.querySelectorAll('.cat-filter').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.filter === filter);
   });
 
-  // Filtra cards
-  const cards   = document.querySelectorAll('#cat-grid .product-card');
-  let visible   = 0;
+  const cards = document.querySelectorAll('#cat-grid .product-card');
+  let visible = 0;
 
   cards.forEach(card => {
     const cats    = card.dataset.cats.split(',').map(c => c.trim().toLowerCase());
@@ -85,89 +89,89 @@ function applyFilter(filter) {
     if (matches) visible++;
   });
 
-  // Actualiza contador
   document.getElementById('cat-count').textContent =
     `${visible} ${visible === 1 ? 'pieza' : 'piezas'}${filter !== 'todas' ? ` en "${filter}"` : ''}`;
 
-  // Empty state
   document.getElementById('cat-empty').style.display = visible === 0 ? 'block' : 'none';
 }
 
-// ── Carga productos desde Google Sheet ──
-async function loadCatalog() {
+// ── Renderiza el grid y filtros ──
+function renderAll() {
   const grid = document.getElementById('cat-grid');
+  grid.innerHTML = allProducts.map(buildCard).join('');
+  buildFilters(allProducts);
+  applyFilter(activeFilter); // mantiene el filtro activo si ya había uno
 
-  // Si no hay Sheet configurado, usa demo
-  if (typeof SHEET_ID === 'undefined' || SHEET_ID === 'TU_SHEET_ID_AQUI') {
-    allProducts = DEMO_PRODUCTS;
+  document.querySelector('[data-filter="todas"]').addEventListener('click', () => applyFilter('todas'));
+}
+
+// ── Fetch a la API serverless ──
+async function fetchFromAPI() {
+  const res      = await fetch('/api/productos');
+  const { ok, products } = await res.json();
+  if (!ok || !products || products.length === 0) throw new Error('Sin productos');
+  return products;
+}
+
+// ── Guarda en localStorage ──
+function saveCache(products) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: products }));
+  } catch (_) {}
+}
+
+// ── Lee de localStorage ──
+function readCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts > CACHE_TTL) return null;
+    return data;
+  } catch (_) { return null; }
+}
+
+// ── Carga principal ──
+async function loadCatalog() {
+  // 1. ¿Hay caché válida? → carga instantánea
+  const cached = readCache();
+  if (cached) {
+    allProducts = cached;
     renderAll();
+    // Refresca en background sin bloquear la UI
+    fetchFromAPI().then(products => {
+      saveCache(products);
+      allProducts = products;
+      renderAll();
+    }).catch(() => {});
     return;
   }
 
-  // Muestra demos mientras carga para que nunca se vea vacío
+  // 2. Sin caché → muestra demos mientras carga la API
   allProducts = DEMO_PRODUCTS;
   renderAll();
 
   try {
-    const url        = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-    const controller = new AbortController();
-    const timer      = setTimeout(() => controller.abort(), 6000);
-    const res        = await fetch(url, { signal: controller.signal });
-    clearTimeout(timer);
-    const text = await res.text();
-    const json = JSON.parse(text.substring(47).slice(0, -2));
-    const rows = json.table.rows;
-
-    if (!rows || rows.length === 0) {
-      grid.innerHTML = '';
-      document.getElementById('cat-count').textContent = '0 piezas';
-      document.getElementById('cat-empty').style.display = 'block';
-      return;
-    }
-
-    allProducts = rows.map(row => ({
-      marca:      row.c[0]?.v ?? '',
-      nombre:     row.c[1]?.v ?? '',
-      categorias: [
-        row.c[2]?.v, row.c[3]?.v, row.c[4]?.v,
-        row.c[5]?.v, row.c[6]?.v, row.c[7]?.v,
-      ].filter(Boolean),
-      retail:     row.c[8]?.v ?? 0,
-      alquiler:   row.c[9]?.v ?? 0,
-      badge:      row.c[10]?.v ?? 'Nuevo',
-      imagen:     row.c[11]?.v ?? '',
-    })).filter(p => p.marca && p.nombre);
-
+    const products = await fetchFromAPI();
+    saveCache(products);
+    allProducts = products;
     renderAll();
-
   } catch (err) {
     console.error('Error cargando catálogo:', err);
-    allProducts = DEMO_PRODUCTS;
-    renderAll();
+    // Se queda con los demos
   }
 }
 
-function renderAll() {
-  const grid = document.getElementById('cat-grid');
-  grid.innerHTML = allProducts.map(buildCard).join('');
-
-  buildFilters(allProducts);
-  applyFilter('todas');
-
-  // Activa botón "Todas"
-  document.querySelector('[data-filter="todas"]').addEventListener('click', () => applyFilter('todas'));
-}
-
-// ── Demo products ──
+// ── Demo products (fallback) ──
 const DEMO_PRODUCTS = [
-  { marca:'Jacquemus',    nombre:'Le Robe Tropea',      retail:1800, alquiler:120, badge:'Nuevo', categorias:['Vestido','Midi','Verano'],   imagen:'' },
-  { marca:'Magda Butrym', nombre:'Vestido floral seda', retail:2200, alquiler:150, badge:'Nuevo', categorias:['Vestido','Seda','Boda'],     imagen:'' },
-  { marca:'Self-Portrait',nombre:'Mini vestido encaje', retail:950,  alquiler:85,  badge:'Nuevo', categorias:['Vestido','Mini','Fiesta'],   imagen:'' },
-  { marca:'Nanushka',     nombre:'Vestido midi satén',  retail:1400, alquiler:110, badge:'Nuevo', categorias:['Vestido','Midi','Casual'],   imagen:'' },
-  { marca:'The Attico',   nombre:'Vestido lentejuelas', retail:3100, alquiler:220, badge:'Nuevo', categorias:['Vestido','Noche','Gala'],    imagen:'' },
-  { marca:'Rotate',       nombre:'Blazer oversize',     retail:760,  alquiler:70,  badge:'Nuevo', categorias:['Blazer','Casual'],           imagen:'' },
-  { marca:'Cult Gaia',    nombre:'Vestido cut-out',     retail:1200, alquiler:95,  badge:'Nuevo', categorias:['Vestido','Verano','Fiesta'], imagen:'' },
-  { marca:'Staud',        nombre:'Mini vestido fruncido',retail:890, alquiler:80,  badge:'Nuevo', categorias:['Vestido','Mini','Casual'],   imagen:'' },
+  { marca:'Jacquemus',    nombre:'Le Robe Tropea',       retail:1800, alquiler:120, badge:'Nuevo', categorias:['Vestido','Midi','Verano'],   imagen:'' },
+  { marca:'Magda Butrym', nombre:'Vestido floral seda',  retail:2200, alquiler:150, badge:'Nuevo', categorias:['Vestido','Seda','Boda'],     imagen:'' },
+  { marca:'Self-Portrait',nombre:'Mini vestido encaje',  retail:950,  alquiler:85,  badge:'Nuevo', categorias:['Vestido','Mini','Fiesta'],   imagen:'' },
+  { marca:'Nanushka',     nombre:'Vestido midi satén',   retail:1400, alquiler:110, badge:'Nuevo', categorias:['Vestido','Midi','Casual'],   imagen:'' },
+  { marca:'The Attico',   nombre:'Vestido lentejuelas',  retail:3100, alquiler:220, badge:'Nuevo', categorias:['Vestido','Noche','Gala'],    imagen:'' },
+  { marca:'Rotate',       nombre:'Blazer oversize',      retail:760,  alquiler:70,  badge:'Nuevo', categorias:['Blazer','Casual'],           imagen:'' },
+  { marca:'Cult Gaia',    nombre:'Vestido cut-out',      retail:1200, alquiler:95,  badge:'Nuevo', categorias:['Vestido','Verano','Fiesta'], imagen:'' },
+  { marca:'Staud',        nombre:'Mini vestido fruncido',retail:890,  alquiler:80,  badge:'Nuevo', categorias:['Vestido','Mini','Casual'],   imagen:'' },
 ];
 
 // ── Init ──

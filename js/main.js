@@ -54,54 +54,44 @@ function buildCard(p, index) {
     </a>`;
 }
 
-// ── Carga productos desde Google Sheets ──
+// ── Carga productos desde la API serverless (rápida, sin CORS) ──
 async function loadProducts() {
   const grid = document.getElementById('products-grid');
   if (!grid) return;
 
-  // Si no está configurado el Sheet, muestra demo cards
-  if (SHEET_ID === 'TU_SHEET_ID_AQUI') {
-    renderDemoProducts(grid);
-    return;
-  }
+  // Intenta caché localStorage primero
+  try {
+    const raw = localStorage.getItem('darimas_products_v1');
+    if (raw) {
+      const { ts, data } = JSON.parse(raw);
+      if (Date.now() - ts < 5 * 60 * 1000 && data.length > 0) {
+        grid.innerHTML = data.map(buildCard).join('');
+        grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        // Refresca en background
+        fetch('/api/productos').then(r => r.json()).then(({ products }) => {
+          if (products?.length) localStorage.setItem('darimas_products_v1', JSON.stringify({ ts: Date.now(), data: products }));
+        }).catch(() => {});
+        return;
+      }
+    }
+  } catch (_) {}
+
+  // Sin caché: muestra demos mientras carga
+  renderDemoProducts(grid);
 
   try {
-    const res  = await fetch(SHEET_URL);
-    const text = await res.text();
+    const res = await fetch('/api/productos');
+    const { ok, products } = await res.json();
+    if (!ok || !products || products.length === 0) return;
 
-    // Google Sheets devuelve JSON envuelto en: google.visualization.Query.setResponse({...});
-    const json  = JSON.parse(text.substring(47).slice(0, -2));
-    const rows  = json.table.rows;
-
-    if (!rows || rows.length === 0) {
-      grid.innerHTML = '<p style="padding:40px;color:#aaa;font-style:italic;">No hay prendas disponibles aún.</p>';
-      return;
-    }
-
-    // Columnas del Sheet DARIMAS:
-    // A: MARCA | B: NOMBRE | C-H: TIPO DE PRENDA 1-5 (categorías)
-    // I: PRECIO RETAIL | J: PRECIO ALQUILER | K: ESTADO | L: URL IMAGEN
-    const products = rows.map(row => ({
-      marca:      row.c[0]?.v ?? '',
-      nombre:     row.c[1]?.v ?? '',
-      categorias: [
-        row.c[2]?.v, row.c[3]?.v, row.c[4]?.v,
-        row.c[5]?.v, row.c[6]?.v, row.c[7]?.v,
-      ].filter(Boolean),
-      retail:     row.c[8]?.v ?? '',
-      alquiler:   row.c[9]?.v ?? '',
-      badge:      row.c[10]?.v ?? 'Nuevo',
-      imagen:     row.c[11]?.v ?? '',
-    })).filter(p => p.marca && p.nombre);
+    try { localStorage.setItem('darimas_products_v1', JSON.stringify({ ts: Date.now(), data: products })); } catch (_) {}
 
     grid.innerHTML = products.map(buildCard).join('');
-
-    // Activa las animaciones reveal para las nuevas cards
     grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
   } catch (err) {
     console.error('Error cargando productos:', err);
-    renderDemoProducts(grid);
+    // Se queda con los demos
   }
 }
 
