@@ -3,11 +3,7 @@
 //  Carga todas las prendas y filtra por categoría
 // ═══════════════════════════════════════════════════════
 
-const PH_SVG = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1">
-  <rect x="3" y="3" width="18" height="18" rx="1"/>
-  <circle cx="8.5" cy="8.5" r="1.5"/>
-  <path d="M21 15l-5-5L5 21"/>
-</svg>`;
+// PH_SVG ya está definido en main.js (cargado antes)
 
 const CACHE_KEY = 'darimas_products_v2';
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
